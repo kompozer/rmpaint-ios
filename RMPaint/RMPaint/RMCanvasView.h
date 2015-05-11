@@ -12,28 +12,25 @@
 @protocol RMCanvasViewDelegate;
 
 @interface RMCanvasView : UIView {
-	// The pixel dimensions of the backbuffer
-	GLint backingWidth;
-	GLint backingHeight;
-	
-	EAGLContext *context;
-	
-	// OpenGL names for the renderbuffer and framebuffers used to render to this view
-	GLuint viewRenderbuffer, viewFramebuffer;
-	
-	// OpenGL name for the depth buffer that is attached to viewFramebuffer, if it exists (0 if it does not exist)
-	GLuint depthRenderbuffer;
-	
-	GLuint	brushTexture;
-	Boolean needsErase;	
+    @private
+    /// The pixel dimensions of the backbuffer
+    GLint backingWidth;
+    GLint backingHeight;
     
-    UIImage* brush_;
-    UIColor* brushColor_;
+    /// OpenGL names for the renderbuffer and framebuffers used to render to this view
+    GLuint viewRenderbuffer;
+    GLuint viewFramebuffer;
+    
+    /// OpenGL name for the depth buffer that is attached to viewFramebuffer, if it exists (0 if it does not exist)
+    GLuint depthRenderbuffer;
+    
+    GLuint	brushTexture;
 }
 
-// Brush dimensions dimensions must be a power of 2.
-@property (nonatomic, strong) UIImage* brush;
-@property (nonatomic, strong) UIColor* brushColor;
+
+/// Brush dimensions dimensions must be a power of 2.
+@property (nonatomic, strong) UIImage *brush;
+@property (nonatomic, strong) UIColor *brushColor;
 @property (weak) id<RMCanvasViewDelegate> delegate;
 
 - (void)erase;

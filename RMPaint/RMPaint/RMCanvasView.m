@@ -3,18 +3,14 @@
 
 #import "RMCanvasView.h"
 
-@interface RMCanvasView (private)
+@interface RMCanvasView ()
 
-- (BOOL)createFramebuffer;
-- (void)destroyFramebuffer;
+@property (nonatomic, strong) EAGLContext *context;
+@property (nonatomic, assign) BOOL needsErase;
 
 @end
 
 @implementation RMCanvasView
-
-@synthesize brush = brush_;
-@synthesize brushColor = brushColor_;
-@synthesize delegate = delegate_;
 
 // Implement this to override the default layer class (which is [CALayer class]).
 // We do this so that our view will be backed by a layer that is capable of OpenGL ES rendering.
@@ -27,7 +23,7 @@
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        [self initialize];
+        [self initCanvasView];
 	}
 	return self; 
 }
@@ -36,7 +32,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        [self initialize];
+        [self initCanvasView];
 	}
 	return self;
 }
@@ -49,12 +45,12 @@
         brushTexture = 0;
     }
     
-    if([EAGLContext currentContext] == context) {
+    if ([EAGLContext currentContext] == self.context) {
         [EAGLContext setCurrentContext:nil];
     }
 }
 
-- (void)initialize
+- (void)initCanvasView
 {
     CAEAGLLayer *eaglLayer = (CAEAGLLayer *)self.layer;
     
@@ -63,9 +59,9 @@
     eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
                                     [NSNumber numberWithBool:YES], kEAGLDrawablePropertyRetainedBacking, kEAGLColorFormatRGBA8, kEAGLDrawablePropertyColorFormat, nil];
     
-    context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
+    self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
     
-    if (!context || ![EAGLContext setCurrentContext:context]) {
+    if (! self.context || ![EAGLContext setCurrentContext:self.context]) {
         return;
     }
     
@@ -91,26 +87,24 @@
     glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
     
     // Make sure to start with a cleared buffer
-    needsErase = YES;
+    self.needsErase = YES;
 }
 
 // Drawings a line onscreen based on where the user touches
 - (void)renderLineFromPoint:(CGPoint)start toPoint:(CGPoint)end
 {
-    RMPaintStep* step = [[RMPaintStep alloc] initWithColor:self.brushColor start:start end:end];
+    RMPaintStep *step = [[RMPaintStep alloc] initWithColor:self.brushColor start:start end:end];
     
     // Convert touch point from UIView referential to OpenGL one (upside-down flip)
     CGRect bounds = [self bounds];    
     start.y = bounds.size.height - start.y;
     end.y = bounds.size.height - end.y;
     
-	static GLfloat*		vertexBuffer = NULL;
-	static NSUInteger	vertexMax = 64;
-	GLsizei			vertexCount = 0,
-    count,
-    i;
+	static GLfloat* vertexBuffer = NULL;
+	static NSUInteger vertexMax = 64;
+	GLsizei	vertexCount = 0, count, i;
 	
-	[EAGLContext setCurrentContext:context];
+	[EAGLContext setCurrentContext:self.context];
 	glBindFramebufferOES(GL_FRAMEBUFFER_OES, viewFramebuffer);
 	
 	// Convert locations from Points to Pixels
@@ -143,7 +137,7 @@
 	
 	// Display the buffer
 	glBindRenderbufferOES(GL_RENDERBUFFER_OES, viewRenderbuffer);
-	[context presentRenderbuffer:GL_RENDERBUFFER_OES];
+	[self.context presentRenderbuffer:GL_RENDERBUFFER_OES];
     
     [self.delegate canvasView:self painted:step];
 }
@@ -153,14 +147,14 @@
 // the same size as our display area.
 -(void)layoutSubviews
 {
-	[EAGLContext setCurrentContext:context];
+	[EAGLContext setCurrentContext:self.context];
 	[self destroyFramebuffer];
 	[self createFramebuffer];
 	
 	// Clear the framebuffer the first time it is allocated
-	if (needsErase) {
+	if (self.needsErase) {
 		[self erase];
-		needsErase = NO;
+		self.needsErase = NO;
 	}
 }
 
@@ -174,7 +168,7 @@
 	glBindRenderbufferOES(GL_RENDERBUFFER_OES, viewRenderbuffer);
 	// This call associates the storage for the current render buffer with the EAGLDrawable (our CAEAGLLayer)
 	// allowing us to draw into a buffer that will later be rendered to screen wherever the layer is (which corresponds with our view).
-	[context renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:(id<EAGLDrawable>)self.layer];
+	[self.context renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:(id<EAGLDrawable>)self.layer];
 	glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, viewRenderbuffer);
 	
 	glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &backingWidth);
@@ -186,8 +180,7 @@
 	glRenderbufferStorageOES(GL_RENDERBUFFER_OES, GL_DEPTH_COMPONENT16_OES, backingWidth, backingHeight);
 	glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_DEPTH_ATTACHMENT_OES, GL_RENDERBUFFER_OES, depthRenderbuffer);
 	
-	if(glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) != GL_FRAMEBUFFER_COMPLETE_OES)
-	{
+	if(glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) != GL_FRAMEBUFFER_COMPLETE_OES) {
 		NSLog(@"failed to make complete framebuffer object %x", glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES));
 		return NO;
 	}
@@ -203,8 +196,7 @@
 	glDeleteRenderbuffersOES(1, &viewRenderbuffer);
 	viewRenderbuffer = 0;
 	
-	if(depthRenderbuffer)
-	{
+	if (depthRenderbuffer) {
 		glDeleteRenderbuffersOES(1, &depthRenderbuffer);
 		depthRenderbuffer = 0;
 	}
@@ -213,7 +205,7 @@
 // Erases the screen
 - (void)erase
 {
-	[EAGLContext setCurrentContext:context];
+	[EAGLContext setCurrentContext:self.context];
 	
 	// Clear the buffer
 	glBindFramebufferOES(GL_FRAMEBUFFER_OES, viewFramebuffer);
@@ -222,16 +214,16 @@
 	
 	// Display the buffer
 	glBindRenderbufferOES(GL_RENDERBUFFER_OES, viewRenderbuffer);
-	[context presentRenderbuffer:GL_RENDERBUFFER_OES];
+	[self.context presentRenderbuffer:GL_RENDERBUFFER_OES];
 }
 
 #pragma mark - Properties
 
 - (void)setBrush:(UIImage *)image
 {
-    brush_ = image;
+    _brush = image;
     
-    [EAGLContext setCurrentContext:context];
+    [EAGLContext setCurrentContext:self.context];
     
     CGImageRef brushImage = self.brush.CGImage;
     
@@ -265,7 +257,8 @@
 
 - (void)setBrushColor:(UIColor *)color
 {
-    brushColor_ = color;
+    _brushColor = color;
+    
     CGFloat red, green, blue, alpha;
     [self.brushColor getRed:&red green:&green blue:&blue alpha:&alpha];
     glColor4f(red * alpha, green * alpha, blue * alpha, alpha);    
