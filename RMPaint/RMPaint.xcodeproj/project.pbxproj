@@ -37,6 +37,7 @@
 		A027CBDB155AD48E0025A0DF /* RMPaint.h in Headers */ = {isa = PBXBuildFile; fileRef = A027CBD9155AD48E0025A0DF /* RMPaint.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A0FF0B4915623B2600FA0AC4 /* RMPaintGestureRecognizer.h in Headers */ = {isa = PBXBuildFile; fileRef = A0FF0B4715623B2600FA0AC4 /* RMPaintGestureRecognizer.h */; settings = {ATTRIBUTES = (); }; };
 		A0FF0B4A15623B2600FA0AC4 /* RMPaintGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = A0FF0B4815623B2600FA0AC4 /* RMPaintGestureRecognizer.m */; };
+		F505B4291B007E7C0007885D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F505B4281B007E7C0007885D /* Default-568h@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +83,7 @@
 		A027CBD9155AD48E0025A0DF /* RMPaint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMPaint.h; sourceTree = "<group>"; };
 		A0FF0B4715623B2600FA0AC4 /* RMPaintGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMPaintGestureRecognizer.h; sourceTree = "<group>"; };
 		A0FF0B4815623B2600FA0AC4 /* RMPaintGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMPaintGestureRecognizer.m; sourceTree = "<group>"; };
+		F505B4281B007E7C0007885D /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +127,7 @@
 		A027CB43155AA4900025A0DF = {
 			isa = PBXGroup;
 			children = (
+				F505B4281B007E7C0007885D /* Default-568h@2x.png */,
 				A027CB53155AA4900025A0DF /* RMPaint */,
 				A027CB67155AA4900025A0DF /* RMPaintTests */,
 				A027CB92155AA6720025A0DF /* RMPaintExample */,
@@ -302,6 +305,7 @@
 		A027CB45155AA4900025A0DF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastTestingUpgradeCheck = 0630;
 				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = "Robot Media SL";
 			};
@@ -339,6 +343,7 @@
 			files = (
 				A027CB97155AA6730025A0DF /* InfoPlist.strings in Resources */,
 				A027CBAB155AA7CA0025A0DF /* brush.png in Resources */,
+				F505B4291B007E7C0007885D /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
