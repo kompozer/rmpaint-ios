@@ -24,7 +24,7 @@
     
     self.session = [[RMPaintSession alloc] initWithDefaultsWithKey:HISTORY_KEY];
     RMCanvasView *canvas = [[RMGestureCanvasView alloc] initWithFrame:self.view.frame];
-    canvas.backgroundColor = [UIColor clearColor];
+    canvas.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:canvas];
     [self.session paintInCanvas:canvas];
     canvas.delegate = self;
