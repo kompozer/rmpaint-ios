@@ -17,6 +17,6 @@
 
 @interface RMGestureCanvasView : RMCanvasView
 
-- (void) renderLineFromTouch:(UITouch*)touch;
+- (void)renderLineFromTouch:(UITouch *)touch;
 
 @end

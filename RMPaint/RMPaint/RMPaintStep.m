@@ -30,8 +30,10 @@
 @synthesize end;
 @synthesize color;
 
-- (id)initWithColor:(UIColor*)aColor start:(CGPoint)aStart end:(CGPoint)anEnd {
-    if ((self = [super init])) {
+- (id)initWithColor:(UIColor*)aColor start:(CGPoint)aStart end:(CGPoint)anEnd
+{
+    self = [super init];
+    if (self) {
         self.color = aColor;
         self.start = aStart;
         self.end = anEnd;
@@ -39,8 +41,10 @@
     return self;
 }
 
-- (id)initWithData:(NSArray*)data {    
-    if ((self = [super init])) {
+- (id)initWithData:(NSArray*)data
+{
+    self = [super init];
+    if (self) {
         self.start = CGPointFromString([data objectAtIndex:0]);
 		self.end = CGPointFromString([data objectAtIndex:1]);
         self.color = [UIColor colorWithRed:[[data objectAtIndex:2] floatValue] 
@@ -51,7 +55,8 @@
     return self;
 }
 
-- (NSArray*) data {
+- (NSArray *)data
+{
     CGFloat red, green, blue, alpha;
     [self.color getRed:&red green:&green blue:&blue alpha:&alpha];
     return [NSArray arrayWithObjects:NSStringFromCGPoint(start), 
@@ -62,7 +67,8 @@
             [NSNumber numberWithFloat:alpha], nil];
 }
 
-- (void)paintInCanvas:(RMCanvasView*)canvas {
+- (void)paintInCanvas:(RMCanvasView*)canvas
+{
     canvas.brushColor = self.color;
     [canvas renderLineFromPoint:self.start toPoint:self.end];
 }

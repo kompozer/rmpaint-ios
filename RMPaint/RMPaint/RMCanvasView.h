@@ -29,13 +29,12 @@
     
     UIImage* brush_;
     UIColor* brushColor_;
-    __unsafe_unretained id<RMCanvasViewDelegate> delegate_;
 }
 
 // Brush dimensions dimensions must be a power of 2.
-@property(nonatomic, retain) UIImage* brush;
-@property(nonatomic, retain) UIColor* brushColor;
-@property(assign) id<RMCanvasViewDelegate> delegate;
+@property (nonatomic, strong) UIImage* brush;
+@property (nonatomic, strong) UIColor* brushColor;
+@property (weak) id<RMCanvasViewDelegate> delegate;
 
 - (void)erase;
 - (void)renderLineFromPoint:(CGPoint)start toPoint:(CGPoint)end;
@@ -44,6 +43,6 @@
 
 @protocol RMCanvasViewDelegate <NSObject>
 
-- (void) canvasView:(RMCanvasView*)canvasView painted:(RMPaintStep*)step;
+- (void)canvasView:(RMCanvasView *)canvasView painted:(RMPaintStep *)step;
 
 @end

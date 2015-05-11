@@ -25,11 +25,11 @@
 
 @interface RMPaintStep : NSObject
 
-@property (strong) UIColor* color;
-@property (assign) CGPoint start;
-@property (assign) CGPoint end;
+@property (nonatomic, strong) UIColor *color;
+@property (nonatomic,assign) CGPoint start;
+@property (nonatomic, assign) CGPoint end;
 
-@property (readonly) NSArray* data;
+@property (readonly) NSArray *data;
 
 - (id)initWithColor:(UIColor*)color start:(CGPoint)start end:(CGPoint)end;
 - (id)initWithData:(NSArray*)data;
