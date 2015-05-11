@@ -25,16 +25,16 @@
 @class RMCanvasView;
 
 @interface RMPaintSession : NSObject {
-    NSMutableArray* steps_;
+    NSMutableArray *steps_;
 }
 
 @property (readonly) NSArray* steps;
 
-- (id)initWithDefaultsWithKey:(NSString*)key;
+- (id)initWithDefaultsWithKey:(NSString *)key;
 
-- (void)addStep:(RMPaintStep*)step;
+- (void)addStep:(RMPaintStep *)step;
 - (void)clear;
-- (void)paintInCanvas:(RMCanvasView*)canvas;
-- (void)saveToDefaultsWithKey:(NSString*)key;
+- (void)paintInCanvas:(RMCanvasView *)canvas;
+- (void)saveToDefaultsWithKey:(NSString *)key;
 
 @end

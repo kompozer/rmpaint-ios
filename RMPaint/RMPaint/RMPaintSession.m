@@ -28,20 +28,23 @@
 @synthesize steps = steps_;
 
 - (id) init {
-    if ((self = [super init])) {
+    self = [super init];
+    if (self) {
         steps_ = [[NSMutableArray alloc] init];        
     }
     return self;    
 }
 
-- (id)initWithDefaultsWithKey:(NSString*)key {    
-    if ((self = [super init])) {
-        NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-        NSArray* data = [defaults objectForKey:key];
+- (id)initWithDefaultsWithKey:(NSString*)key
+{
+    self = [super init];
+    if (self) {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSArray *data = [defaults objectForKey:key];
         if (data) {
             steps_ = [[NSMutableArray alloc] initWithCapacity:data.count];
-            for (NSArray* stepData in data) {
-                RMPaintStep* step = [[RMPaintStep alloc] initWithData:stepData];
+            for (NSArray *stepData in data) {
+                RMPaintStep *step = [[RMPaintStep alloc] initWithData:stepData];
                 [steps_ addObject:step];
             }
         } else {
@@ -51,19 +54,22 @@
     return self;
 }
 
-- (void) clear {
+- (void) clear
+{
     [steps_ removeAllObjects];
 }
 
-- (void)paintInCanvas:(RMCanvasView*)canvas {
-    for (RMPaintStep* step in self.steps) {
+- (void)paintInCanvas:(RMCanvasView *)canvas
+{
+    for (RMPaintStep *step in self.steps) {
         [step paintInCanvas:canvas];
     }
 }
 
-- (void)saveToDefaultsWithKey:(NSString*)key {
-	NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-    NSMutableArray* data = [NSMutableArray arrayWithCapacity:self.steps.count];
+- (void)saveToDefaultsWithKey:(NSString*)key
+{
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableArray *data = [NSMutableArray arrayWithCapacity:self.steps.count];
     for (RMPaintStep* step in self.steps) {
         [data addObject:step.data];
     }
@@ -71,7 +77,8 @@
 	[defaults synchronize];
 }
 
-- (void) addStep:(RMPaintStep*)step {
+- (void)addStep:(RMPaintStep*)step
+{
     [steps_ addObject:step];
 }
 

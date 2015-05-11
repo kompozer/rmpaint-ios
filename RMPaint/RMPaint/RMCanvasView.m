@@ -18,12 +18,44 @@
 
 // Implement this to override the default layer class (which is [CALayer class]).
 // We do this so that our view will be backed by a layer that is capable of OpenGL ES rendering.
-+ (Class) layerClass
++ (Class)layerClass
 {
 	return [CAEAGLLayer class];
 }
 
-- (void) initialize {
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self initialize];
+	}
+	return self; 
+}
+
+- (id)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self initialize];
+	}
+	return self;
+}
+
+// Releases resources when they are not longer needed.
+- (void)dealloc
+{
+    if (brushTexture) {
+        glDeleteTextures(1, &brushTexture);
+        brushTexture = 0;
+    }
+    
+    if([EAGLContext currentContext] == context) {
+        [EAGLContext setCurrentContext:nil];
+    }
+}
+
+- (void)initialize
+{
     CAEAGLLayer *eaglLayer = (CAEAGLLayer *)self.layer;
     
     eaglLayer.opaque = YES;
@@ -33,11 +65,14 @@
     
     context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
     
-    if (!context || ![EAGLContext setCurrentContext:context]) return;
+    if (!context || ![EAGLContext setCurrentContext:context]) {
+        return;
+    }
+    
     
     // Set the view's scale factor
     self.contentScaleFactor = 1.0;
-	
+    
     // Setup OpenGL states
     glMatrixMode(GL_PROJECTION);
     CGRect frame = self.bounds;
@@ -59,22 +94,8 @@
     needsErase = YES;
 }
 
-- (id) initWithCoder:(NSCoder *)aDecoder {
-    if ((self = [super initWithCoder:aDecoder])) {
-        [self initialize];
-	}
-	return self; 
-}
-
-- (id)initWithFrame:(CGRect)frame {
-    if ((self = [super initWithFrame:frame])) {
-        [self initialize];
-	}
-	return self;
-}
-
 // Drawings a line onscreen based on where the user touches
-- (void) renderLineFromPoint:(CGPoint)start toPoint:(CGPoint)end
+- (void)renderLineFromPoint:(CGPoint)start toPoint:(CGPoint)end
 {
     RMPaintStep* step = [[RMPaintStep alloc] initWithColor:self.brushColor start:start end:end];
     
@@ -85,7 +106,7 @@
     
 	static GLfloat*		vertexBuffer = NULL;
 	static NSUInteger	vertexMax = 64;
-	NSUInteger			vertexCount = 0,
+	GLsizei			vertexCount = 0,
     count,
     i;
 	
@@ -126,7 +147,6 @@
     
     [self.delegate canvasView:self painted:step];
 }
-
 
 // If our view is resized, we'll be asked to layout subviews.
 // This is the perfect opportunity to also update the framebuffer so that it is
@@ -190,24 +210,8 @@
 	}
 }
 
-// Releases resources when they are not longer needed.
-- (void) dealloc
-{
-	if (brushTexture)
-	{
-		glDeleteTextures(1, &brushTexture);
-		brushTexture = 0;
-	}
-	
-	if([EAGLContext currentContext] == context)
-	{
-		[EAGLContext setCurrentContext:nil];
-	}
-	
-}
-
 // Erases the screen
-- (void) erase
+- (void)erase
 {
 	[EAGLContext setCurrentContext:context];
 	
@@ -223,7 +227,8 @@
 
 #pragma mark - Properties
 
-- (void) setBrush:(UIImage *)image {
+- (void)setBrush:(UIImage *)image
+{
     brush_ = image;
     
     [EAGLContext setCurrentContext:context];
@@ -249,7 +254,7 @@
     // Set the texture parameters to use a minifying filter and a linear filer (weighted average)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     // Specify a 2D texture image, providing the a pointer to the image data in memory
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, brushData);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)width, (GLsizei)height, 0, GL_RGBA, GL_UNSIGNED_BYTE, brushData);
     // Release  the image data; it's no longer needed
     free(brushData);
     
@@ -258,7 +263,8 @@
     glPointSize(width / kBrushScale);
 }
 
-- (void) setBrushColor:(UIColor *)color {
+- (void)setBrushColor:(UIColor *)color
+{
     brushColor_ = color;
     CGFloat red, green, blue, alpha;
     [self.brushColor getRed:&red green:&green blue:&blue alpha:&alpha];

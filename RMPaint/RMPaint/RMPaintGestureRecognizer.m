@@ -22,33 +22,43 @@
 
 #import "RMPaintGestureRecognizer.h"
 
+@interface RMPaintGestureRecognizer ()
+
+@property (nonatomic, readwrite) NSSet *touches;
+
+@end
+
 @implementation RMPaintGestureRecognizer
 
-@synthesize touches = touches_;
-
-- (void)reset {
+- (void)reset
+{
     [super reset];
-    touches_ = nil;
+    self.touches = nil;
 }
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
     [super touchesBegan:touches withEvent:event];
-    touches_ = [NSSet setWithSet:touches];
+    self.touches = [NSSet setWithSet:touches];
     self.state = UIGestureRecognizerStateBegan;
 }
 
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
     [super touchesMoved:touches withEvent:event];
-    touches_ = [NSSet setWithSet:touches];
+    self.touches = [NSSet setWithSet:touches];
     self.state = UIGestureRecognizerStateChanged;
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
     [super touchesEnded:touches withEvent:event];
-    touches_ = [NSSet setWithSet:touches];
+    self.touches = [NSSet setWithSet:touches];
     self.state = UIGestureRecognizerStateEnded;    
 }
 
-- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
+{
     [super touchesEnded:touches withEvent:event];
     self.state = UIGestureRecognizerStateCancelled;
 }

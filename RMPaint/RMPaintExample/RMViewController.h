@@ -9,8 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "RMPaint.h"
 
-@interface RMViewController : UIViewController<RMCanvasViewDelegate> {
-    RMPaintSession* session;
-}
+@interface RMViewController : UIViewController <RMCanvasViewDelegate>
 
 @end

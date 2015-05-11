@@ -10,15 +10,23 @@
 
 #define HISTORY_KEY @"history"
 
+@interface RMViewController ()
+
+@property (nonatomic, strong) RMPaintSession *session;
+
+@end
+
 @implementation RMViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    session = [[RMPaintSession alloc] initWithDefaultsWithKey:HISTORY_KEY];     
-    RMCanvasView* canvas = [[RMGestureCanvasView alloc] initWithFrame:self.view.frame];
+    
+    self.session = [[RMPaintSession alloc] initWithDefaultsWithKey:HISTORY_KEY];
+    RMCanvasView *canvas = [[RMGestureCanvasView alloc] initWithFrame:self.view.frame];
+    canvas.backgroundColor = [UIColor clearColor];
     [self.view addSubview:canvas];
-    [session paintInCanvas:canvas];
+    [self.session paintInCanvas:canvas];
     canvas.delegate = self;
     canvas.brush = [UIImage imageNamed:@"brush.png"];
     canvas.brushColor = [UIColor redColor];
@@ -26,12 +34,13 @@
 
 - (void)viewDidUnload
 {
-    [session saveToDefaultsWithKey:HISTORY_KEY];
+    [self.session saveToDefaultsWithKey:HISTORY_KEY];
     [super viewDidUnload];
 }
 
-- (void) canvasView:(RMCanvasView *)canvasView painted:(RMPaintStep *)step {
-    [session addStep:step];
+- (void)canvasView:(RMCanvasView *)canvasView painted:(RMPaintStep *)step
+{
+    [self.session addStep:step];
 }
 
 @end

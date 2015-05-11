@@ -37,6 +37,7 @@
 		A027CBDB155AD48E0025A0DF /* RMPaint.h in Headers */ = {isa = PBXBuildFile; fileRef = A027CBD9155AD48E0025A0DF /* RMPaint.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A0FF0B4915623B2600FA0AC4 /* RMPaintGestureRecognizer.h in Headers */ = {isa = PBXBuildFile; fileRef = A0FF0B4715623B2600FA0AC4 /* RMPaintGestureRecognizer.h */; settings = {ATTRIBUTES = (); }; };
 		A0FF0B4A15623B2600FA0AC4 /* RMPaintGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = A0FF0B4815623B2600FA0AC4 /* RMPaintGestureRecognizer.m */; };
+		F505B4291B007E7C0007885D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F505B4281B007E7C0007885D /* Default-568h@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +83,7 @@
 		A027CBD9155AD48E0025A0DF /* RMPaint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMPaint.h; sourceTree = "<group>"; };
 		A0FF0B4715623B2600FA0AC4 /* RMPaintGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMPaintGestureRecognizer.h; sourceTree = "<group>"; };
 		A0FF0B4815623B2600FA0AC4 /* RMPaintGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMPaintGestureRecognizer.m; sourceTree = "<group>"; };
+		F505B4281B007E7C0007885D /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +127,7 @@
 		A027CB43155AA4900025A0DF = {
 			isa = PBXGroup;
 			children = (
+				F505B4281B007E7C0007885D /* Default-568h@2x.png */,
 				A027CB53155AA4900025A0DF /* RMPaint */,
 				A027CB67155AA4900025A0DF /* RMPaintTests */,
 				A027CB92155AA6720025A0DF /* RMPaintExample */,
@@ -277,7 +280,7 @@
 			name = RMPaintTests;
 			productName = RMPaintTests;
 			productReference = A027CB5E155AA4900025A0DF /* RMPaintTests.octest */;
-			productType = "com.apple.product-type.bundle";
+			productType = "com.apple.product-type.bundle.ocunit-test";
 		};
 		A027CB8B155AA6720025A0DF /* RMPaintExample */ = {
 			isa = PBXNativeTarget;
@@ -302,7 +305,8 @@
 		A027CB45155AA4900025A0DF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0430;
+				LastTestingUpgradeCheck = 0630;
+				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = "Robot Media SL";
 			};
 			buildConfigurationList = A027CB48155AA4900025A0DF /* Build configuration list for PBXProject "RMPaint" */;
@@ -339,6 +343,7 @@
 			files = (
 				A027CB97155AA6730025A0DF /* InfoPlist.strings in Resources */,
 				A027CBAB155AA7CA0025A0DF /* brush.png in Resources */,
+				F505B4291B007E7C0007885D /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -424,11 +429,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -436,10 +449,14 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -448,13 +465,24 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				SDKROOT = iphoneos;
