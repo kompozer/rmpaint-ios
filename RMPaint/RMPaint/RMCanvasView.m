@@ -242,7 +242,7 @@
     // Allocate  memory needed for the bitmap context
     GLubyte *brushData = (GLubyte *) calloc(width * height * 4, sizeof(GLubyte));
     // Use  the bitmatp creation function provided by the Core Graphics framework. 
-    CGContextRef brushContext = CGBitmapContextCreate(brushData, width, height, 8, width * 4, CGImageGetColorSpace(brushImage), kCGImageAlphaPremultipliedLast);
+    CGContextRef brushContext = CGBitmapContextCreate(brushData, width, height, 8, width * 4, CGImageGetColorSpace(brushImage), kCGBitmapAlphaInfoMask & kCGImageAlphaPremultipliedLast);
     // After you create the context, you can draw the  image to the context.
     CGContextDrawImage(brushContext, CGRectMake(0.0, 0.0, (CGFloat)width, (CGFloat)height), brushImage);
     // You don't need the context at this point, so you need to release it to avoid memory leaks.
