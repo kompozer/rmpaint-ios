@@ -23,14 +23,19 @@
 #import "RMPaintSession.h"
 #import "RMCanvasView.h"
 
+@interface RMPaintSession ()
+
+@property (nonatomic, strong) NSMutableArray *mutableSteps;
+
+@end
+
 @implementation RMPaintSession 
 
-@synthesize steps = steps_;
-
-- (id) init {
+- (id)init
+{
     self = [super init];
     if (self) {
-        steps_ = [[NSMutableArray alloc] init];        
+        self.mutableSteps = [[NSMutableArray alloc] init];
     }
     return self;    
 }
@@ -42,26 +47,31 @@
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSArray *data = [defaults objectForKey:key];
         if (data) {
-            steps_ = [[NSMutableArray alloc] initWithCapacity:data.count];
+            self.mutableSteps = [[NSMutableArray alloc] initWithCapacity:data.count];
             for (NSArray *stepData in data) {
                 RMPaintStep *step = [[RMPaintStep alloc] initWithData:stepData];
-                [steps_ addObject:step];
+                [self.mutableSteps addObject:step];
             }
         } else {
-            steps_ = [[NSMutableArray alloc] init];        
+            self.mutableSteps = [[NSMutableArray alloc] init];
         }
     }
     return self;
 }
 
-- (void) clear
+- (NSArray *)steps
 {
-    [steps_ removeAllObjects];
+    return [NSArray arrayWithArray:self.mutableSteps];
+}
+
+- (void)clear
+{
+    [self.mutableSteps removeAllObjects];
 }
 
 - (void)paintInCanvas:(RMCanvasView *)canvas
 {
-    for (RMPaintStep *step in self.steps) {
+    for (RMPaintStep *step in self.mutableSteps) {
         [step paintInCanvas:canvas];
     }
 }
@@ -69,17 +79,17 @@
 - (void)saveToDefaultsWithKey:(NSString*)key
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSMutableArray *data = [NSMutableArray arrayWithCapacity:self.steps.count];
-    for (RMPaintStep* step in self.steps) {
+    NSMutableArray *data = [NSMutableArray arrayWithCapacity:self.mutableSteps.count];
+    for (RMPaintStep* step in self.mutableSteps) {
         [data addObject:step.data];
     }
 	[defaults setObject:data forKey:key];
 	[defaults synchronize];
 }
 
-- (void)addStep:(RMPaintStep*)step
+- (void)addStep:(RMPaintStep *)step
 {
-    [steps_ addObject:step];
+    [self.mutableSteps addObject:step];
 }
 
 @end

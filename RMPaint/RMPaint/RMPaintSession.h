@@ -22,13 +22,14 @@
 
 #import <Foundation/Foundation.h>
 #import "RMPaintStep.h"
+
 @class RMCanvasView;
 
-@interface RMPaintSession : NSObject {
-    NSMutableArray *steps_;
-}
 
-@property (readonly) NSArray* steps;
+
+@interface RMPaintSession : NSObject
+
+@property (nonatomic, strong, readonly) NSArray *steps;
 
 - (id)initWithDefaultsWithKey:(NSString *)key;
 
