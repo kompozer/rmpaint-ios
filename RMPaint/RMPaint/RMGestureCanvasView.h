@@ -15,8 +15,9 @@
 
 #import "RMCanvasView.h"
 
+
+
 @interface RMGestureCanvasView : RMCanvasView
 
-- (void)renderLineFromTouch:(UITouch *)touch;
 
 @end

@@ -4,9 +4,10 @@
 #import <OpenGLES/ES1/glext.h>
 #import "RMPaintStep.h"
 
-
 @class RMCanvasOptions;
 @protocol RMCanvasViewDelegate;
+
+
 
 @interface RMCanvasView : UIView {
     @private
@@ -34,6 +35,8 @@
 - (void)renderLineFromPoint:(CGPoint)start toPoint:(CGPoint)end;
 
 @end
+
+
 
 @protocol RMCanvasViewDelegate <NSObject>
 

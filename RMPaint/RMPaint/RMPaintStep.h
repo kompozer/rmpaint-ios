@@ -21,19 +21,21 @@
 //	along with RMPaint.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <UIKit/UIKit.h>
+
 @class RMCanvasView;
+
+
 
 @interface RMPaintStep : NSObject
 
 @property (nonatomic, strong) UIColor *color;
-@property (nonatomic,assign) CGPoint start;
+@property (nonatomic, assign) CGPoint start;
 @property (nonatomic, assign) CGPoint end;
+@property (nonatomic, readonly) NSArray *data;
 
-@property (readonly) NSArray *data;
+- (id)initWithColor:(UIColor *)color start:(CGPoint)start end:(CGPoint)end;
+- (id)initWithData:(NSArray *)data;
 
-- (id)initWithColor:(UIColor*)color start:(CGPoint)start end:(CGPoint)end;
-- (id)initWithData:(NSArray*)data;
-
-- (void)paintInCanvas:(RMCanvasView*)canvas;
+- (void)paintInCanvas:(RMCanvasView *)canvas;
 
 @end

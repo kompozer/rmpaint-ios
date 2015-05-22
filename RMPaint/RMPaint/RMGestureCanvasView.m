@@ -16,6 +16,8 @@
 #import "RMGestureCanvasView.h"
 #import "RMPaintGestureRecognizer.h"
 
+
+
 @implementation RMGestureCanvasView
 
 - (id)initWithFrame:(CGRect)frame
@@ -28,7 +30,7 @@
 	return self;
 }
 
-- (void)handleDrag:(RMPaintGestureRecognizer*)sender
+- (void)handleDrag:(RMPaintGestureRecognizer *)sender
 {
     NSSet* touches = sender.touches;
     for (UITouch* touch in touches) {
@@ -36,11 +38,11 @@
     }
 }
 
-- (void)renderLineFromTouch:(UITouch*)touch
+- (void)renderLineFromTouch:(UITouch *)touch
 {
     CGPoint end = [touch locationInView:self];
     CGPoint start = [touch previousLocationInView:self];
-    [self renderLineFromPoint:start toPoint:end];    
+    [self renderLineFromPoint:start toPoint:end];
 }
 
 @end

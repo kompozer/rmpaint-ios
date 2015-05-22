@@ -8,6 +8,8 @@
 
 #import "RMCanvasOptions.h"
 
+
+
 @implementation RMCanvasOptions
 
 + (instancetype)canvasOptionsDefaults

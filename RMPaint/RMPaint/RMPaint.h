@@ -9,3 +9,4 @@
 #import "RMCanvasView.h"
 #import "RMGestureCanvasView.h"
 #import "RMPaintSession.h"
+#import "RMCanvasOptions.h"

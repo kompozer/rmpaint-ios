@@ -22,6 +22,8 @@
 
 #import "RMPaintGestureRecognizer.h"
 
+
+
 @interface RMPaintGestureRecognizer ()
 
 @property (nonatomic, readwrite) NSSet *touches;

@@ -23,9 +23,11 @@
 #import <UIKit/UIKit.h>
 #import <UIKit/UIGestureRecognizerSubclass.h>
 
+
+
 @interface RMPaintGestureRecognizer : UIGestureRecognizer
 
-@property (nonatomic, readonly) NSSet* touches;
+@property (nonatomic, readonly) NSSet *touches;
 
 - (void)reset;
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;

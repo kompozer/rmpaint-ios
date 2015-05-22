@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 
+
 @interface RMCanvasOptions : NSObject
 
 @property (nonatomic, assign) float brushPixelStep;

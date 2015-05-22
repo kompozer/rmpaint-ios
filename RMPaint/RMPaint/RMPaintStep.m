@@ -23,6 +23,8 @@
 #import "RMPaintStep.h"
 #import "RMCanvasView.h"
 
+
+
 @implementation RMPaintStep
 
 @dynamic data;
@@ -30,7 +32,7 @@
 @synthesize end;
 @synthesize color;
 
-- (id)initWithColor:(UIColor*)aColor start:(CGPoint)aStart end:(CGPoint)anEnd
+- (id)initWithColor:(UIColor *)aColor start:(CGPoint)aStart end:(CGPoint)anEnd
 {
     self = [super init];
     if (self) {
@@ -41,7 +43,7 @@
     return self;
 }
 
-- (id)initWithData:(NSArray*)data
+- (id)initWithData:(NSArray *)data
 {
     self = [super init];
     if (self) {
@@ -67,7 +69,7 @@
             [NSNumber numberWithFloat:alpha], nil];
 }
 
-- (void)paintInCanvas:(RMCanvasView*)canvas
+- (void)paintInCanvas:(RMCanvasView *)canvas
 {
     canvas.brushColor = self.color;
     [canvas renderLineFromPoint:self.start toPoint:self.end];

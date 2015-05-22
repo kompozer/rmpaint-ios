@@ -23,6 +23,8 @@
 #import "RMPaintSession.h"
 #import "RMCanvasView.h"
 
+
+
 @interface RMPaintSession ()
 
 @property (nonatomic, strong) NSMutableArray *mutableSteps;
