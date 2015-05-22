@@ -38,6 +38,8 @@
 		A0FF0B4915623B2600FA0AC4 /* RMPaintGestureRecognizer.h in Headers */ = {isa = PBXBuildFile; fileRef = A0FF0B4715623B2600FA0AC4 /* RMPaintGestureRecognizer.h */; settings = {ATTRIBUTES = (); }; };
 		A0FF0B4A15623B2600FA0AC4 /* RMPaintGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = A0FF0B4815623B2600FA0AC4 /* RMPaintGestureRecognizer.m */; };
 		F505B4291B007E7C0007885D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F505B4281B007E7C0007885D /* Default-568h@2x.png */; };
+		F594FA9D1B0FB86600FBC8AD /* RMCanvasOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = F594FA9B1B0FB86600FBC8AD /* RMCanvasOptions.h */; };
+		F594FA9E1B0FB86600FBC8AD /* RMCanvasOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = F594FA9C1B0FB86600FBC8AD /* RMCanvasOptions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +86,8 @@
 		A0FF0B4715623B2600FA0AC4 /* RMPaintGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMPaintGestureRecognizer.h; sourceTree = "<group>"; };
 		A0FF0B4815623B2600FA0AC4 /* RMPaintGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMPaintGestureRecognizer.m; sourceTree = "<group>"; };
 		F505B4281B007E7C0007885D /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		F594FA9B1B0FB86600FBC8AD /* RMCanvasOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMCanvasOptions.h; sourceTree = "<group>"; };
+		F594FA9C1B0FB86600FBC8AD /* RMCanvasOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMCanvasOptions.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,6 +177,8 @@
 				A027CB7C155AA4C90025A0DF /* RMPaintStep.m */,
 				A027CB79155AA4C90025A0DF /* RMGestureCanvasView.h */,
 				A027CB7A155AA4C90025A0DF /* RMGestureCanvasView.m */,
+				F594FA9B1B0FB86600FBC8AD /* RMCanvasOptions.h */,
+				F594FA9C1B0FB86600FBC8AD /* RMCanvasOptions.m */,
 				A027CB54155AA4900025A0DF /* Supporting Files */,
 			);
 			path = RMPaint;
@@ -236,6 +242,7 @@
 			files = (
 				A027CB80155AA4C90025A0DF /* RMGestureCanvasView.h in Headers */,
 				A027CB82155AA4C90025A0DF /* RMPaintStep.h in Headers */,
+				F594FA9D1B0FB86600FBC8AD /* RMCanvasOptions.h in Headers */,
 				A027CB84155AA4C90025A0DF /* RMPaintSession.h in Headers */,
 				A027CB87155AA4E00025A0DF /* RMCanvasView.h in Headers */,
 				A027CBDB155AD48E0025A0DF /* RMPaint.h in Headers */,
@@ -371,6 +378,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A027CB7F155AA4C90025A0DF /* RMCanvasView.m in Sources */,
+				F594FA9E1B0FB86600FBC8AD /* RMCanvasOptions.m in Sources */,
 				A027CB81155AA4C90025A0DF /* RMGestureCanvasView.m in Sources */,
 				A027CB83155AA4C90025A0DF /* RMPaintStep.m in Sources */,
 				A027CB85155AA4C90025A0DF /* RMPaintSession.m in Sources */,

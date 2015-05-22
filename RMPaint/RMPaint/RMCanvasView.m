@@ -3,6 +3,10 @@
 
 #import "RMCanvasView.h"
 
+#import "RMCanvasOptions.h"
+
+
+
 @interface RMCanvasView ()
 
 @property (nonatomic, strong) EAGLContext *context;
@@ -88,6 +92,8 @@
     
     // Make sure to start with a cleared buffer
     self.needsErase = YES;
+    
+    self.canvasOptions = [RMCanvasOptions canvasOptionsDefaults];
 }
 
 // Drawings a line onscreen based on where the user touches
@@ -119,7 +125,7 @@
 		vertexBuffer = malloc(vertexMax * 2 * sizeof(GLfloat));
 	
 	// Add points to the buffer so there are drawing points every X pixels
-	count = MAX(ceilf(sqrtf((end.x - start.x) * (end.x - start.x) + (end.y - start.y) * (end.y - start.y)) / kBrushPixelStep), 1);
+	count = MAX(ceilf(sqrtf((end.x - start.x) * (end.x - start.x) + (end.y - start.y) * (end.y - start.y)) / self.canvasOptions.brushPixelStep), 1);
 	for(i = 0; i < count; ++i) {
 		if(vertexCount == vertexMax) {
 			vertexMax = 2 * vertexMax;
@@ -252,7 +258,7 @@
     
     glEnable(GL_POINT_SPRITE_OES);
     glTexEnvf(GL_POINT_SPRITE_OES, GL_COORD_REPLACE_OES, GL_TRUE);
-    glPointSize(width / kBrushScale);
+    glPointSize(width / self.canvasOptions.brushScale);
 }
 
 - (void)setBrushColor:(UIColor *)color

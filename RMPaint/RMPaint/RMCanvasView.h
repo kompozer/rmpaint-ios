@@ -4,11 +4,8 @@
 #import <OpenGLES/ES1/glext.h>
 #import "RMPaintStep.h"
 
-#define kBrushPixelStep		3
-#define kBrushScale			2
-#define kLuminosity			0.5
-#define kSaturation			1.0
 
+@class RMCanvasOptions;
 @protocol RMCanvasViewDelegate;
 
 @interface RMCanvasView : UIView {
@@ -24,14 +21,14 @@
     /// OpenGL name for the depth buffer that is attached to viewFramebuffer, if it exists (0 if it does not exist)
     GLuint depthRenderbuffer;
     
-    GLuint	brushTexture;
+    GLuint brushTexture;
 }
-
 
 /// Brush dimensions dimensions must be a power of 2.
 @property (nonatomic, strong) UIImage *brush;
 @property (nonatomic, strong) UIColor *brushColor;
-@property (weak) id<RMCanvasViewDelegate> delegate;
+@property (nonatomic, strong) RMCanvasOptions *canvasOptions;
+@property (nonatomic, weak) id<RMCanvasViewDelegate> delegate;
 
 - (void)erase;
 - (void)renderLineFromPoint:(CGPoint)start toPoint:(CGPoint)end;
