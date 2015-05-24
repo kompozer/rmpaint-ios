@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "rmpaint"
-  s.version          = "0.9.1"
+  s.version          = "0.9.2"
   s.summary          = "Painting for iOS"
   s.description      = <<-DESC
 Painting for iOS based on the GLPaint example by Apple.
