@@ -99,6 +99,13 @@
 // Drawings a line onscreen based on where the user touches
 - (void)renderLineFromPoint:(CGPoint)start toPoint:(CGPoint)end
 {
+    // Set brush color
+    if (self.brushColor) {
+        CGFloat red, green, blue, alpha;
+        [_brushColor getRed:&red green:&green blue:&blue alpha:&alpha];
+        glColor4f(red * alpha, green * alpha, blue * alpha, alpha);
+    }
+    
     RMPaintStep *step = [[RMPaintStep alloc] initWithColor:self.brushColor start:start end:end];
     
     // Convert touch point from UIView referential to OpenGL one (upside-down flip)
@@ -298,15 +305,6 @@
     glEnable(GL_POINT_SPRITE_OES);
     glTexEnvf(GL_POINT_SPRITE_OES, GL_COORD_REPLACE_OES, GL_TRUE);
     glPointSize(width / self.canvasOptions.brushScale);
-}
-
-- (void)setBrushColor:(UIColor *)color
-{
-    _brushColor = color;
-    
-    CGFloat red, green, blue, alpha;
-    [self.brushColor getRed:&red green:&green blue:&blue alpha:&alpha];
-    glColor4f(red * alpha, green * alpha, blue * alpha, alpha);    
 }
 
 @end
