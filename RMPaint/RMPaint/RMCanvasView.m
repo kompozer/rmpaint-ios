@@ -58,7 +58,7 @@
 {
     CAEAGLLayer *eaglLayer = (CAEAGLLayer *)self.layer;
     
-    eaglLayer.opaque = YES;
+    eaglLayer.opaque = NO;
     // In this application, we want to retain the EAGLDrawable contents after a call to presentRenderbuffer.
     eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
                                     [NSNumber numberWithBool:YES], kEAGLDrawablePropertyRetainedBacking, kEAGLColorFormatRGBA8, kEAGLDrawablePropertyColorFormat, nil];
@@ -216,11 +216,47 @@
 	// Clear the buffer
 	glBindFramebufferOES(GL_FRAMEBUFFER_OES, viewFramebuffer);
 	glClearColor(0.0, 0.0, 0.0, 0.0);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
 	// Display the buffer
 	glBindRenderbufferOES(GL_RENDERBUFFER_OES, viewRenderbuffer);
 	[self.context presentRenderbuffer:GL_RENDERBUFFER_OES];
+}
+
+- (UIImage *)snapshotImage
+{
+    const CGFloat width = self.frame.size.width;
+    const CGFloat height = self.frame.size.height;
+    GLubyte *tmpBuffer = (GLubyte *)malloc(width * height * 4);
+    glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, tmpBuffer);
+    GLubyte *buffer = (GLubyte *)malloc(width * height * 4);
+    
+    for (int y = 0; y < height; y++) {
+        for(int x = 0; x < width * 4; x++) {
+            buffer[((NSInteger)height - 1 - y) * (NSInteger)width * 4 + x] = tmpBuffer[y * 4 * (NSInteger)width + x];
+        }
+    }
+    CGDataProviderRef provider = CGDataProviderCreateWithData(NULL, buffer, width * height * 4, NULL);
+    
+    int bitsPerComponent = 8;
+    int bitsPerPixel = 32;
+    int bytesPerRow = 4 * width;
+    CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
+    CGBitmapInfo bitmapInfo = kCGBitmapByteOrder32Big | kCGImageAlphaPremultipliedLast;
+    CGColorRenderingIntent renderingIntent = kCGRenderingIntentDefault;
+    
+    // Make the cgimage.
+    CGImageRef imageRef = CGImageCreate(width, height,
+                                        bitsPerComponent,
+                                        bitsPerPixel,
+                                        bytesPerRow,
+                                        colorSpaceRef,
+                                        bitmapInfo,
+                                        provider,
+                                        NULL, NO,
+                                        renderingIntent);
+    
+    return [UIImage imageWithCGImage:imageRef];
 }
 
 #pragma mark - Properties

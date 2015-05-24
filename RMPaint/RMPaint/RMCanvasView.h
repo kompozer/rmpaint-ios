@@ -34,6 +34,8 @@
 - (void)erase;
 - (void)renderLineFromPoint:(CGPoint)start toPoint:(CGPoint)end;
 
+- (UIImage *)snapshotImage;
+
 @end
 
 
