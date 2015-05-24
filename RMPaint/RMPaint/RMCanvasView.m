@@ -108,7 +108,9 @@
     
 	static GLfloat* vertexBuffer = NULL;
 	static NSUInteger vertexMax = 64;
-	GLsizei	vertexCount = 0, count, i;
+    GLsizei	vertexCount = 0;
+    GLsizei count;
+    GLsizei i;
 	
 	[EAGLContext setCurrentContext:self.context];
 	glBindFramebufferOES(GL_FRAMEBUFFER_OES, viewFramebuffer);
@@ -121,13 +123,14 @@
 	end.y *= scale;
 	
 	// Allocate vertex array buffer
-	if(vertexBuffer == NULL)
+    if (vertexBuffer == NULL) {
 		vertexBuffer = malloc(vertexMax * 2 * sizeof(GLfloat));
+    }
 	
 	// Add points to the buffer so there are drawing points every X pixels
 	count = MAX(ceilf(sqrtf((end.x - start.x) * (end.x - start.x) + (end.y - start.y) * (end.y - start.y)) / self.canvasOptions.brushPixelStep), 1);
 	for(i = 0; i < count; ++i) {
-		if(vertexCount == vertexMax) {
+		if (vertexCount == vertexMax) {
 			vertexMax = 2 * vertexMax;
 			vertexBuffer = realloc(vertexBuffer, vertexMax * 2 * sizeof(GLfloat));
 		}
