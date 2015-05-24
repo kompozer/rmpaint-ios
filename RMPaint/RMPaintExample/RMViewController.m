@@ -32,10 +32,13 @@
     canvas.brushColor = [UIColor redColor];
 }
 
-- (void)viewDidUnload
+- (void)viewDidDisappear:(BOOL)animated
 {
-    [self.session saveToDefaultsWithKey:HISTORY_KEY];
-    [super viewDidUnload];
+    [super viewDidDisappear:animated];
+    
+    if (self.isBeingDismissed) {
+        [self.session saveToDefaultsWithKey:HISTORY_KEY];
+    }
 }
 
 - (void)canvasView:(RMCanvasView *)canvasView painted:(RMPaintStep *)step
