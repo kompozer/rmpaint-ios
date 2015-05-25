@@ -27,11 +27,6 @@
 
 @implementation RMPaintStep
 
-@dynamic data;
-@synthesize start;
-@synthesize end;
-@synthesize color;
-
 - (id)initWithColor:(UIColor *)aColor start:(CGPoint)aStart end:(CGPoint)anEnd
 {
     self = [super init];
@@ -61,8 +56,8 @@
 {
     CGFloat red, green, blue, alpha;
     [self.color getRed:&red green:&green blue:&blue alpha:&alpha];
-    return [NSArray arrayWithObjects:NSStringFromCGPoint(start), 
-            NSStringFromCGPoint(end), 
+    return [NSArray arrayWithObjects:NSStringFromCGPoint(self.start),
+            NSStringFromCGPoint(self.end),
             [NSNumber numberWithFloat:red], 
             [NSNumber numberWithFloat:green], 
             [NSNumber numberWithFloat:blue], 
