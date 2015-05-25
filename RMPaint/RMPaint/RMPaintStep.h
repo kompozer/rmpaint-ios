@@ -32,6 +32,7 @@
 @property (nonatomic, assign) CGPoint start;
 @property (nonatomic, assign) CGPoint end;
 @property (nonatomic, readonly) NSArray *data;
+@property (nonatomic, assign) NSUInteger operationIndex;
 
 - (id)initWithColor:(UIColor *)color start:(CGPoint)start end:(CGPoint)end;
 - (id)initWithData:(NSArray *)data;

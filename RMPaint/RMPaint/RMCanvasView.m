@@ -1,9 +1,10 @@
-#import <QuartzCore/QuartzCore.h>
-#import <OpenGLES/EAGLDrawable.h>
-
 #import "RMCanvasView.h"
 
+#import <QuartzCore/QuartzCore.h>
+#import <OpenGLES/EAGLDrawable.h>
 #import "RMCanvasOptions.h"
+#import "RMPaintStep.h"
+#import "RMPaintSession.h"
 
 
 
@@ -94,6 +95,7 @@
     self.needsErase = YES;
     
     self.canvasOptions = [RMCanvasOptions canvasOptionsDefaults];
+    self.session = [RMPaintSession new];
 }
 
 // Drawings a line onscreen based on where the user touches
@@ -156,6 +158,7 @@
 	[self.context presentRenderbuffer:GL_RENDERBUFFER_OES];
     
     [self.delegate canvasView:self painted:step];
+    [self.session addStep:step];
 }
 
 // If our view is resized, we'll be asked to layout subviews.

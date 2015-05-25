@@ -21,9 +21,9 @@
 //	along with RMPaint.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Foundation/Foundation.h>
-#import "RMPaintStep.h"
 
 @class RMCanvasView;
+@class RMPaintStep;
 
 
 
@@ -33,9 +33,15 @@
 
 - (id)initWithDefaultsWithKey:(NSString *)key;
 
+- (void)startOperation;
 - (void)addStep:(RMPaintStep *)step;
-- (void)clear;
+- (void)endOperation;
+
+- (void)removeLastOperation;
+
 - (void)paintInCanvas:(RMCanvasView *)canvas;
+
+- (void)clear;
 - (void)saveToDefaultsWithKey:(NSString *)key;
 
 @end

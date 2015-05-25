@@ -24,9 +24,10 @@
     
     self.session = [[RMPaintSession alloc] initWithDefaultsWithKey:HISTORY_KEY];
     RMCanvasView *canvas = [[RMGestureCanvasView alloc] initWithFrame:self.view.frame];
+    canvas.session = self.session;
     canvas.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:canvas];
-    [self.session paintInCanvas:canvas];
+//    [self.session paintInCanvas:canvas];
     canvas.delegate = self;
     canvas.brush = [UIImage imageNamed:@"brush.png"];
     canvas.brushColor = [UIColor redColor];
@@ -43,7 +44,7 @@
 
 - (void)canvasView:(RMCanvasView *)canvasView painted:(RMPaintStep *)step
 {
-    [self.session addStep:step];
+//    [self.session addStep:step];
 }
 
 @end

@@ -21,13 +21,18 @@
 //	along with RMPaint.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "RMPaintSession.h"
+
 #import "RMCanvasView.h"
+#import "RMPaintStep.h"
 
 
 
 @interface RMPaintSession ()
 
 @property (nonatomic, strong) NSMutableArray *mutableSteps;
+@property (nonatomic, assign) NSUInteger operationIndex;
+@property (nonatomic, assign) BOOL operationStarted;
+
 
 @end
 
@@ -71,9 +76,39 @@
     [self.mutableSteps removeAllObjects];
 }
 
+- (void)startOperation
+{
+    self.operationStarted = YES;
+    self.operationIndex += 1;
+}
+
+- (void)endOperation
+{
+    self.operationStarted = NO;
+}
+
+- (void)removeLastOperation
+{
+    NSUInteger lastOperationIndex = self.operationStarted ? (self.operationIndex - 1): self.operationIndex;
+    NSMutableArray *remove = [NSMutableArray array];
+    [self.mutableSteps enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(RMPaintStep *step, NSUInteger idx, BOOL *stop) {
+        if (step.operationIndex == lastOperationIndex) {
+            [remove addObject:step];
+        }
+        else {
+            *stop = YES;
+        }
+    }];
+    [self.mutableSteps removeObjectsInArray:remove];
+    if (! self.operationStarted) {
+        self.operationIndex = (lastOperationIndex - 1);
+    }
+}
+
 - (void)paintInCanvas:(RMCanvasView *)canvas
 {
-    for (RMPaintStep *step in self.mutableSteps) {
+    NSArray *steps = self.steps;
+    for (RMPaintStep *step in steps) {
         [step paintInCanvas:canvas];
     }
 }
@@ -82,7 +117,7 @@
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSMutableArray *data = [NSMutableArray arrayWithCapacity:self.mutableSteps.count];
-    for (RMPaintStep* step in self.mutableSteps) {
+    for (RMPaintStep *step in self.mutableSteps) {
         [data addObject:step.data];
     }
 	[defaults setObject:data forKey:key];
@@ -91,6 +126,7 @@
 
 - (void)addStep:(RMPaintStep *)step
 {
+    step.operationIndex = self.operationIndex;
     [self.mutableSteps addObject:step];
 }
 

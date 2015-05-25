@@ -15,6 +15,7 @@
 
 #import "RMGestureCanvasView.h"
 #import "RMPaintGestureRecognizer.h"
+#import "RMPaintSession.h"
 
 
 
@@ -32,8 +33,15 @@
 
 - (void)handleDrag:(RMPaintGestureRecognizer *)sender
 {
-    NSSet* touches = sender.touches;
-    for (UITouch* touch in touches) {
+    if (sender.state == UIGestureRecognizerStateBegan) {
+        [self.session startOperation];
+    }
+    else if (sender.state == UIGestureRecognizerStateEnded) {
+        [self.session endOperation];
+    }
+    
+    NSSet *touches = sender.touches;
+    for (UITouch *touch in touches) {
         [self renderLineFromTouch:touch];        
     }
 }

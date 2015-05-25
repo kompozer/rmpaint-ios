@@ -2,9 +2,10 @@
 #import <OpenGLES/EAGL.h>
 #import <OpenGLES/ES1/gl.h>
 #import <OpenGLES/ES1/glext.h>
-#import "RMPaintStep.h"
 
 @class RMCanvasOptions;
+@class RMPaintStep;
+@class RMPaintSession;
 @protocol RMCanvasViewDelegate;
 
 
@@ -29,6 +30,7 @@
 @property (nonatomic, strong) UIImage *brush;
 @property (nonatomic, strong) UIColor *brushColor;
 @property (nonatomic, strong) RMCanvasOptions *canvasOptions;
+@property (nonatomic, strong) RMPaintSession *session;
 @property (nonatomic, weak) id<RMCanvasViewDelegate> delegate;
 
 - (void)erase;
